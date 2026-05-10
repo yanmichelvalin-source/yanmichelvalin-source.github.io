@@ -1,0 +1,440 @@
+# yanmichel.github.io
+Portfoliot
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yan-Michel Valin — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #080808;
+    --text: #f0ece4;
+    --muted: #888;
+    --accent: #f0ece4;
+    --card-gap: 6px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.4rem 3rem;
+    background: linear-gradient(to bottom, rgba(8,8,8,0.95), transparent);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 0.08em;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+
+  /* HERO */
+  .hero {
+    padding: 14rem 3rem 6rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .hero h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(4rem, 12vw, 10rem);
+    line-height: 0.9;
+    letter-spacing: 0.02em;
+    color: var(--text);
+  }
+
+  .hero-sub {
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* FILTERS */
+  .filters {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem 2rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .filter-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 2px;
+    transition: all 0.2s;
+    position: relative;
+  }
+
+  .filter-btn::after {
+    content: '';
+    position: absolute;
+    bottom: 4px; left: 50%; right: 50%;
+    height: 1px;
+    background: var(--text);
+    transition: all 0.25s;
+  }
+
+  .filter-btn:hover { color: var(--text); }
+
+  .filter-btn.active {
+    color: var(--text);
+  }
+
+  .filter-btn.active::after {
+    left: 1rem;
+    right: 1rem;
+  }
+
+  .filter-sep {
+    color: #333;
+    font-size: 0.9rem;
+  }
+
+  /* GRID */
+  .grid {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 3rem 6rem;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--card-gap);
+  }
+
+  .card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    aspect-ratio: 4/3;
+    background: #111;
+  }
+
+  .card.hidden {
+    display: none;
+  }
+
+  .card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.4s;
+    opacity: 0.85;
+  }
+
+  .card:hover img {
+    transform: scale(1.05);
+    opacity: 0.4;
+  }
+
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.5rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.35s;
+  }
+
+  .card:hover .card-overlay {
+    opacity: 1;
+  }
+
+  .card-cat {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 0.4rem;
+  }
+
+  .card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.6rem;
+    letter-spacing: 0.05em;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  /* wide card spans 2 cols */
+  .card.wide {
+    grid-column: span 2;
+  }
+
+  /* CONTACT */
+  .contact {
+    border-top: 1px solid #1a1a1a;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .contact-left h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    letter-spacing: 0.04em;
+    color: var(--text);
+    line-height: 1;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-email {
+    display: inline-block;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text);
+    text-decoration: none;
+    border-bottom: 1px solid #333;
+    padding-bottom: 3px;
+    transition: border-color 0.2s;
+  }
+
+  .contact-email:hover { border-color: var(--text); }
+
+  .contact-right {
+    display: flex;
+    gap: 2rem;
+  }
+
+  .social-link {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .social-link:hover { color: var(--text); }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 3rem;
+    text-align: center;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: #333;
+    text-transform: uppercase;
+  }
+
+  /* FADE IN */
+  .card {
+    animation: fadeUp 0.6s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .hero { padding: 10rem 1.5rem 4rem; }
+    .filters { padding: 0 1.5rem 1.5rem; flex-wrap: wrap; }
+    .grid { grid-template-columns: repeat(2, 1fr); padding: 0 1.5rem 4rem; }
+    .card.wide { grid-column: span 1; }
+    .contact { flex-direction: column; gap: 3rem; align-items: flex-start; padding: 4rem 1.5rem; }
+  }
+
+  @media (max-width: 560px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="#">YMV</a>
+  <ul class="nav-links">
+    <li><a href="#">Accueil</a></li>
+    <li><a href="#projets">Portfolio</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <h1>Yan-Michel<br>Valin</h1>
+  <p class="hero-sub">Réalisateur &amp; Chef opérateur</p>
+</section>
+
+<div class="filters">
+  <button class="filter-btn active" data-filter="all">Tout</button>
+  <span class="filter-sep">·</span>
+  <button class="filter-btn" data-filter="clip">Clip</button>
+  <span class="filter-sep">·</span>
+  <button class="filter-btn" data-filter="film">Film</button>
+  <span class="filter-sep">·</span>
+  <button class="filter-btn" data-filter="pub">Pub</button>
+</div>
+
+<section class="grid" id="projets">
+
+  <!-- Projet 1 — remplace src par ton image, data-cat par ta catégorie -->
+  <div class="card wide" data-cat="clip" style="animation-delay:0s">
+    <img src=""A:\CINE\videos terminees\films\réalisations\corpo\miniatures\Turfu2025.png"" alt="Festival Turfu 2025">
+    <div class="card-overlay">
+      <span class="card-cat">Clip</span>
+      <span class="card-title">Festival Turfu 2025</span>
+    </div>
+  </div>
+
+  <div class="card" data-cat="film" style="animation-delay:0.05s">
+    <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?w=600&q=80" alt="Nuit Blanche">
+    <div class="card-overlay">
+      <span class="card-cat">Film</span>
+      <span class="card-title">Nuit Blanche</span>
+    </div>
+  </div>
+
+  <div class="card" data-cat="pub" style="animation-delay:0.1s">
+    <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&q=80" alt="Campagne Automne">
+    <div class="card-overlay">
+      <span class="card-cat">Pub</span>
+      <span class="card-title">Campagne Automne</span>
+    </div>
+  </div>
+
+  <div class="card" data-cat="clip" style="animation-delay:0.15s">
+    <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600&q=80" alt="Mirage">
+    <div class="card-overlay">
+      <span class="card-cat">Clip</span>
+      <span class="card-title">Mirage</span>
+    </div>
+  </div>
+
+  <div class="card wide" data-cat="film" style="animation-delay:0.2s">
+    <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?w=900&q=80" alt="La Course de ta Vie">
+    <div class="card-overlay">
+      <span class="card-cat">Film</span>
+      <span class="card-title">La Course de ta Vie</span>
+    </div>
+  </div>
+
+  <div class="card" data-cat="pub" style="animation-delay:0.25s">
+    <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80" alt="Pour combien ?">
+    <div class="card-overlay">
+      <span class="card-cat">Pub</span>
+      <span class="card-title">Pour combien ?</span>
+    </div>
+  </div>
+
+  <div class="card" data-cat="clip" style="animation-delay:0.3s">
+    <img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&q=80" alt="Soula">
+    <div class="card-overlay">
+      <span class="card-cat">Clip</span>
+      <span class="card-title">Soula</span>
+    </div>
+  </div>
+
+  <div class="card" data-cat="film" style="animation-delay:0.35s">
+    <img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=600&q=80" alt="Respire Fort">
+    <div class="card-overlay">
+      <span class="card-cat">Film</span>
+      <span class="card-title">Respire Fort</span>
+    </div>
+  </div>
+
+  <div class="card wide" data-cat="pub" style="animation-delay:0.4s">
+    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80" alt="Showreel 2025">
+    <div class="card-overlay">
+      <span class="card-cat">Pub</span>
+      <span class="card-title">Showreel 2025</span>
+    </div>
+  </div>
+
+</section>
+
+<section class="contact" id="contact">
+  <div class="contact-left">
+    <h2>Travaillons<br>ensemble</h2>
+    <a class="contact-email" href="mailto:contact@yanmichelvalin.fr">contact@yanmichelvalin.fr</a>
+  </div>
+  <div class="contact-right">
+    <a class="social-link" href="#">Instagram</a>
+    <a class="social-link" href="#">Vimeo</a>
+    <a class="social-link" href="#">LinkedIn</a>
+  </div>
+</section>
+
+<footer>© 2025 Yan-Michel Valin</footer>
+
+<script>
+  const btns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.card');
+
+  btns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      btns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      cards.forEach((card, i) => {
+        const match = filter === 'all' || card.dataset.cat === filter;
+        if (match) {
+          card.classList.remove('hidden');
+          card.style.animationDelay = (i * 0.05) + 's';
+          card.style.animation = 'none';
+          requestAnimationFrame(() => { card.style.animation = ''; });
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

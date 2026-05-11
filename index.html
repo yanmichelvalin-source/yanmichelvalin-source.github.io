@@ -25,6 +25,7 @@
     font-family: 'DM Sans', sans-serif;
     font-weight: 300;
     min-height: 100vh;
+	overflow-x: hidden;
   }
 
   /* NAV */
@@ -289,8 +290,10 @@
     .contact { flex-direction: column; gap: 3rem; align-items: flex-start; padding: 4rem 1.5rem; }
   }
 
-  @media (max-width: 560px) {
+   @media (max-width: 560px) {
     .grid { grid-template-columns: 1fr; }
+    .card[style*="visibility: hidden"] { display: none; }
+    .filter-btn { font-size: 0.65rem; padding: 0.4rem 0.6rem; }
   }
 </style>
 </head>
